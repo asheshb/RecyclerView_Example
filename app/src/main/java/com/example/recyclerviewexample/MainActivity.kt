@@ -2,6 +2,7 @@ package com.example.recyclerviewexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -32,8 +33,15 @@ class MainActivity : AppCompatActivity() {
 
             layoutManager = LinearLayoutManager(this@MainActivity)
 
-            adapter = CountryAdapter()
+            adapter = CountryAdapter().apply {
+                setHasStableIds(true)
+            }
+            setHasFixedSize(true)
+        }
 
+        val showCountries = findViewById<Button>(R.id.show_countries)
+        showCountries.setOnClickListener {
+            (countryList.adapter as CountryAdapter).countryData = countries
         }
     }
 }
