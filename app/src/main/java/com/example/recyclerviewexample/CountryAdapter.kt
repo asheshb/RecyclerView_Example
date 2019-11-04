@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adapter<CountryAdapter.ViewHolder>(){
+class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adapter<CountryAdapter.CountryViewHolder>(){
 
     var countryData = arrayOf<Country>()
         set(value){
@@ -15,7 +15,7 @@ class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adap
             notifyDataSetChanged()
         }
 
-    inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    inner class CountryViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val countryFlag: ImageView = view.findViewById(R.id.country_flag)
         val countryName: TextView = view.findViewById(R.id.country_name)
         val capitalCity: TextView = view.findViewById(R.id.country_capital)
@@ -30,7 +30,7 @@ class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adap
             with(countryData){
                 countryFlag.setImageResource(flagId)
                 countryName.text = name
-                this@ViewHolder.capitalCity.text = capitalCity
+                this@CountryViewHolder.capitalCity.text = capitalCity
             }
         }
     }
@@ -38,15 +38,15 @@ class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adap
     override fun getItemCount() = countryData.size
 
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): ViewHolder {
+                                    viewType: Int): CountryViewHolder {
 
         val itemLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.country_item, parent, false)
 
-        return ViewHolder(itemLayout)
+        return CountryViewHolder(itemLayout)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
         holder.bind(countryData[position])
     }
 

@@ -15,7 +15,7 @@
         android:contentDescription="@string/country_flag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/in" />
+        tools:srcCompat="@drawable/in" />
 
     <TextView
         android:id="@+id/country_name"
