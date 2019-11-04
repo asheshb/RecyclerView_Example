@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class CountryAdapter(private val listener: (Country) -> Unit): ListAdapter<Country, CountryAdapter.ViewHolder>(DiffCallback()){
+class CountryAdapter(private val listener: (Country) -> Unit): ListAdapter<Country,
+        CountryAdapter.CountryViewHolder>(DiffCallback()){
 
-    inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    inner class CountryViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         private val countryFlag: ImageView = view.findViewById(R.id.country_flag)
         private val countryName: TextView = view.findViewById(R.id.country_name)
         private val capitalCity: TextView = view.findViewById(R.id.country_capital)
@@ -26,21 +27,21 @@ class CountryAdapter(private val listener: (Country) -> Unit): ListAdapter<Count
             with(countryData) {
                 countryFlag.setImageResource(flagId)
                 countryName.text = name
-                this@ViewHolder.capitalCity.text = capitalCity
+                this@CountryViewHolder.capitalCity.text = capitalCity
             }
         }
     }
 
         override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): ViewHolder {
+                                    viewType: Int): CountryViewHolder {
 
         val itemLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.country_item, parent, false)
 
-        return ViewHolder(itemLayout)
+        return CountryViewHolder(itemLayout)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
