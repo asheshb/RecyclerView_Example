@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CountryAdapter: RecyclerView.Adapter<CountryAdapter.ViewHolder>(){
+class CountryAdapter(private val listener: (Country) -> Unit): RecyclerView.Adapter<CountryAdapter.ViewHolder>(){
 
     var countryData = arrayOf<Country>()
         set(value){
@@ -15,10 +15,24 @@ class CountryAdapter: RecyclerView.Adapter<CountryAdapter.ViewHolder>(){
             notifyDataSetChanged()
         }
 
-    class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val countryFlag: ImageView = view.findViewById(R.id.country_flag)
         val countryName: TextView = view.findViewById(R.id.country_name)
         val capitalCity: TextView = view.findViewById(R.id.country_capital)
+
+        init{
+            itemView.setOnClickListener{
+                listener.invoke(countryData[adapterPosition])
+            }
+        }
+
+        fun bind(countryData: Country){
+            with(countryData){
+                countryFlag.setImageResource(flagId)
+                countryName.text = name
+                this@ViewHolder.capitalCity.text = capitalCity
+            }
+        }
     }
 
     override fun getItemCount() = countryData.size
@@ -33,11 +47,7 @@ class CountryAdapter: RecyclerView.Adapter<CountryAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder){
-            countryFlag.setImageResource(countryData[position].flagId)
-            countryName.text = countryData[position].name
-            capitalCity.text = countryData[position].capitalCity
-        }
+        holder.bind(countryData[position])
     }
 
     override fun getItemId(position: Int): Long {

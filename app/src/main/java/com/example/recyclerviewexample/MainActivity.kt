@@ -3,6 +3,7 @@ package com.example.recyclerviewexample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity() {
 
             layoutManager = LinearLayoutManager(this@MainActivity)
 
-            adapter = CountryAdapter().apply {
+            adapter = CountryAdapter{
+                Toast.makeText(this@MainActivity, "Country: {${it.name}} was clicked",
+                    Toast.LENGTH_SHORT).show()
+            }.apply {
                 setHasStableIds(true)
             }
             setHasFixedSize(true)
